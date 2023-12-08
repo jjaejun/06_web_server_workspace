@@ -1,4 +1,4 @@
-package com.sh.app.item.domain;
+package com.sh.web.item.domain;
 
 import java.util.Objects;
 
