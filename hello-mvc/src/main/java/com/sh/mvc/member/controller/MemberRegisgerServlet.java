@@ -30,7 +30,7 @@ public class MemberRegisgerServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // 1. 인코딩처리
-        req.setCharacterEncoding("utf-8");
+//        req.setCharacterEncoding("utf-8");
 
         // 2. 사용자 입력값 가져오기
         // id, password, name, birthday, email, phone, gender, hobby
@@ -44,7 +44,7 @@ public class MemberRegisgerServlet extends HttpServlet {
         String[] _hobby = req.getParameterValues("hobby");
 //        System.out.println(id + ", " + password + ", " + name + ", " + _birthday + ", " + email + ", " + phone + ", " + _gender + ", " + _hobby);
 
-        LocalDate birthday = _birthday != null ? LocalDate.parse(_birthday, DateTimeFormatter.ISO_DATE) : null;
+        LocalDate birthday = (_birthday != null) && !"".equals(_birthday) ? LocalDate.parse(_birthday, DateTimeFormatter.ISO_DATE) : null;
         Gender gender = _gender != null ? Gender.valueOf(_gender) : null;
         List<String> hobby = _hobby != null ? Arrays.asList(_hobby) : null;
 
@@ -58,6 +58,6 @@ public class MemberRegisgerServlet extends HttpServlet {
         req.getSession().setAttribute("msg", "✨✨ 회원가입 축하드립니다. 🎉🎉");
 
         // 4. view(forward) | redirect
-        resp.sendRedirect(req.getContextPath());
+        resp.sendRedirect(req.getContextPath() + "/");
     }
 }

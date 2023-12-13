@@ -15,8 +15,9 @@
     <script src="${pageContext.request.contextPath}/js/tailwind.config.js"></script>
     <script>
         <c:if test="${msg != null}">
-            alert("${msg}");
-            <%-- session속성 msg 제거해서 1회만 출력되도록 한다. --%>
+            alert(`${msg}`); // 여러줄 입력이 가능하도록 ``(백틱)으로 감싼다.
+            <%-- session속성 msg 제거해서 1회만 출력되도록 한다.
+                 제거하지 않을 시 메세지가 계속 출력됨 --%>
             <%-- session.removeAttribute("msg"); --%>
             <c:remove var="msg" scope="session"/>
         </c:if>

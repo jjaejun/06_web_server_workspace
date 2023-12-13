@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE configuration
-        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        PUBLIC "-//mvc.org//DTD Config 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <properties resource="datasource.properties"></properties>
@@ -49,6 +49,6 @@
     </environments>
 
     <mappers>
-        <mapper resource="/mapper/member/member-mapper.xml"/>
+        <mapper resource="mapper/member/member-mapper.xml"/>
     </mappers>
 </configuration>

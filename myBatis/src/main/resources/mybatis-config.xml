@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE configuration
-        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        PUBLIC "-//mvc.org//DTD Config 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <properties resource="datasource.properties"></properties>
@@ -13,7 +13,7 @@
     </settings>
 
     <typeAliases>
-<!--        <typeAlias type="com.sh.mybatis.member.model.entity.Member" alias="member"/>-->
+<!--        <typeAlias type="com.sh.mvc.member.model.entity.Member" alias="member"/>-->
         <!--
             package 하위 모든 클래스가 소문자로 시작되는 별칭으로 등록
             - Member -> member

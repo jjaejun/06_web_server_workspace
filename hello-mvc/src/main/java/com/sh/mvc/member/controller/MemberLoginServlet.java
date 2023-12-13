@@ -59,7 +59,7 @@ public class MemberLoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // 1. 사용자입력값 인코딩처리
-        req.setCharacterEncoding("utf-8");
+//        req.setCharacterEncoding("utf-8");
 
         // 2. 사용자입력값 가져오기
         String id = req.getParameter("id");
@@ -72,6 +72,9 @@ public class MemberLoginServlet extends HttpServlet {
         // 로그인 실패 (존재하지 않는 id | password가 틀린 경우)
         Member member = memberService.findById(id);
         System.out.println(member);
+        
+        // 세션 생성 / 가져오기
+        // getSession(), getSession(true)
         HttpSession session = req.getSession();
         if(member != null && password.equals(member.getPassword())) {
             // 로그인 성공
@@ -86,6 +89,6 @@ public class MemberLoginServlet extends HttpServlet {
         // 4. view단처리 (forwarding) | redirect처리 (url변경 시)
         // DML요청(POST), 로그인 요청등은 반드시 redirect로 처리해서 url을 변경해야 한다.
 //        req.getRequestDispatcher("/index.jsp").forward(req, resp);
-        resp.sendRedirect(req.getContextPath());
+        resp.sendRedirect(req.getContextPath() + "/");
     }
 }
