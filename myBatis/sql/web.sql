@@ -42,3 +42,25 @@ values('admin','1234','관리자','A','M', to_date('19971020','yyyymmdd'), 'admi
 
 select * from member;
 commit;
+
+--delete from member where id in ('leess');
+update
+    member 
+set
+    password = 'm8DNoGM5Gm2DBKJQ1Z7wCPMBeX4jWeckZNXxyestEtXUfgH1alMX1bDh9yhNXTEB8oJ5E2MjXN3NJieZ4qGf5w=='
+where
+    id = 'abcde';
+    
+update
+    member 
+set
+    password = 'dwscFdjHOBrdrPjdDgS59PgOfvTWEJs6jv/TDZI7n4BpvufqaQmm6Auu/3mNrotq1CnZC7H5Z+Lfh/GazpRRKw=='
+where
+    id = 'qwerty';
+    
+update
+    member 
+set
+    password = 'kvOffyqGmDjNUIXm8X/IIQm8+YzWKkfLw3njjegLvAITojzubkoT3myq4K3Yo5AnLW8Ig8J0Mgsf9g28/G3XUA=='
+where
+    id = 'admin';
