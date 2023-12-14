@@ -5,6 +5,7 @@ import com.sh.mvc.member.model.entity.Member;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
+import java.util.Map;
 
 import static com.sh.mvc.common.SqlSessionTemplate.getSqlsession;
 
@@ -109,5 +110,12 @@ public class MemberService {
             session.close();
         }
         return result;
+    }
+
+    public List<Member> searchMember(Map<String, Object> param) {
+        SqlSession session = getSqlsession();
+        List<Member> members = memberDao.searchMember(session, param);
+        session.close();
+        return members;
     }
 }
