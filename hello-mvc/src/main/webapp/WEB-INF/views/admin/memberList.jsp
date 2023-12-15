@@ -104,9 +104,17 @@
         </table>
     </div>
 </div>
+
 <form action="${pageContext.request.contextPath}/admin/updateMemberRole" name="memberRoleUpdateFrm" method="post">
     <input type="hidden" name="id">
     <input type="hidden" name="role">
 </form>
+
+<nav class="mb-8 flex justify-center">
+    <ul class="flex items-center -space-x-px h-8 text-sm">
+        ${pagebar}
+    </ul>
+</nav>
+
 <script src="${pageContext.request.contextPath}/js/admin/memberList.js"></script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
