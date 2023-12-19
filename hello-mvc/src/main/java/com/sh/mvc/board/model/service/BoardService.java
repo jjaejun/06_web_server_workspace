@@ -1,0 +1,101 @@
+package com.sh.mvc.board.model.service;
+
+import com.sh.mvc.board.model.dao.BoardDao;
+import com.sh.mvc.board.model.entity.Attachment;
+import com.sh.mvc.board.model.entity.Board;
+import com.sh.mvc.board.model.vo.BoardVO;
+import org.apache.ibatis.session.SqlSession;
+
+import java.util.List;
+import java.util.Map;
+
+import static com.sh.mvc.common.SqlSessionTemplate.getSqlsession;
+
+public class BoardService {
+    private BoardDao boardDao = new BoardDao();
+
+    public List<BoardVO> findAll() {
+        SqlSession session = getSqlsession();
+        List<BoardVO> board = boardDao.findAll(session);
+        session.close();
+        return board;
+    }
+
+    public int getTotalCount() {
+        SqlSession session = getSqlsession();
+        int result = boardDao.getTotalCount(session);
+        session.close();
+        return result;
+    }
+
+    public BoardVO findById(long id) {
+        SqlSession session = getSqlsession();
+        BoardVO board = boardDao.findById(session, id);
+        session.close();
+        return board;
+    }
+
+    public List<BoardVO> findAll(Map<String, Object> param) {
+        SqlSession session = getSqlsession();
+        List<BoardVO> boards = boardDao.findAll(session, param);
+        session.close();
+        return boards;
+    }
+
+    public int insertBoard(BoardVO board) {
+        int result = 0;
+        SqlSession session = getSqlsession();
+        try {
+            // board 테이블에 등록
+            result = boardDao.insertBoard(session, board);
+            System.out.println("BoardService#insertBoard : board#id = " + board.getId());
+
+            // attachment 테이블에 등록
+            List<Attachment> attachments = board.getAttachments();
+            if (!attachments.isEmpty()) {
+                for (Attachment attach : attachments) {
+                    attach.setBoardId((board.getId())); // fk boardId 필드값 대입
+                    result = boardDao.insertAttachment(session, attach);
+                }
+            }
+
+            session.commit();
+        } catch (Exception e) {
+            session.rollback();
+            throw e;
+        } finally {
+            session.close();
+        }
+        return result;
+    }
+
+    public int updateBoard(Board board) {
+        int result = 0;
+        SqlSession session = getSqlsession();
+        try {
+            result = boardDao.updateBoard(session, board);
+            session.commit();
+        } catch (Exception e) {
+            session.rollback();
+            throw e;
+        } finally {
+            session.close();
+        }
+        return result;
+    }
+
+    public int deleteBoard(long id) {
+        int result = 0;
+        SqlSession session = getSqlsession();
+        try {
+            result = boardDao.deleteBoard(session, id);
+            session.commit();
+        } catch (Exception e) {
+            session.rollback();
+            throw e;
+        } finally {
+            session.close();
+        }
+        return result;
+    }
+}

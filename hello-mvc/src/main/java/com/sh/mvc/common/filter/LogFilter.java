@@ -29,9 +29,9 @@ public class LogFilter extends HttpFilter {
         // 전처리 (요청직후)
         String uri = request.getRequestURI();
         String method = request.getMethod();
-//        System.out.println("========================================================");
-//        System.out.printf("%s %s\n", method, uri);
-//        System.out.println("--------------------------------------------------------");
+        System.out.println("========================================================");
+        System.out.printf("%s %s\n", method, uri);
+        System.out.println("--------------------------------------------------------");
 
         // filterChain : filter묶음(여러 Filter를 그룹핑해서 관리)
         // - 다음 Filter가 있는 경우, 해당 Filter#doFilter 호출
@@ -39,9 +39,9 @@ public class LogFilter extends HttpFilter {
         super.doFilter(request, response, chain); // chain.doFilter(request, response)
         
         // 후처리 (응답직전)
-//        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-//        System.out.println(response.getStatus());
-//        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-//        System.out.println();
+        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println(response.getStatus());
+        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println();
     }
 }

@@ -19,8 +19,10 @@ import java.io.IOException;
 @WebFilter(urlPatterns = {
         "/member/memberDetail",
         "/member/memberUpdate",
-        "/member/memberDelete"
+        "/member/memberDelete",
+        "/board/boardCreate"
 })
+
 public class AuthenticationFilter extends HttpFilter {
     @Override
     protected void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
