@@ -15,9 +15,7 @@
         <package name="org.kh.member"/>
     </typeAliases>
 
-    <typeHandlers>
-        <typeHandler handler="edu.kh.test.common.ListStringTypeHandler"/>
-    </typeHandlers>
+
 
     <environments default="development">
         <environment id="development">

@@ -16,7 +16,7 @@ public class SqlSessionTemplate {
 
         try (InputStream is = Resources.getResourceAsStream(resource)) {
             SqlSessionFactoryBuilder builder = new SqlSessionFactoryBuilder();
-            SqlSessionFactory factory = builder.build(is);
+            factory = builder.build(is);
         } catch (IOException e) {
             e.printStackTrace();
         }
