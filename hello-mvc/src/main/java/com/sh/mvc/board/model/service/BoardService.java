@@ -2,7 +2,6 @@ package com.sh.mvc.board.model.service;
 
 import com.sh.mvc.board.model.dao.BoardDao;
 import com.sh.mvc.board.model.entity.Attachment;
-import com.sh.mvc.board.model.entity.Board;
 import com.sh.mvc.board.model.vo.BoardVO;
 import org.apache.ibatis.session.SqlSession;
 
@@ -28,10 +27,38 @@ public class BoardService {
         return result;
     }
 
+    /**
+     * 조회수 상관없이 게시글 조회해야 하는 경우
+     */
     public BoardVO findById(long id) {
+        return findById(id, true);
+    }
+    public BoardVO findById(long id, boolean hasRead) {
         SqlSession session = getSqlsession();
-        BoardVO board = boardDao.findById(session, id);
-        session.close();
+        BoardVO board = null;
+        int result = 0;
+        // 조회수 증가처리 (1회 방문시 증가)
+        try {
+            // 조회수 증가처리
+            if (!hasRead)
+                result = boardDao.updateBoardReadCount(session, id);
+
+            // 조회
+            board = boardDao.findById(session, id); // select * from board where id = ?
+
+            session.commit();
+        } catch (Exception e) {
+            session.rollback();
+            throw e;
+        } finally {
+            session.close();
+        }
+
+//       데이터가 큰 db에 적합한 방법은 아니다
+//        Member member = boardDao.findById(session, board.getMemberId()); // select * from member where id = ?
+//        List<Attachment> attachments = boardDao.findAttachmentByBoardId(session, id); // select * from attachment where board_id = ?
+//        board.setMember(member);
+//        board.setAttachments(attachments);
         return board;
     }
 
@@ -69,11 +96,22 @@ public class BoardService {
         return result;
     }
 
-    public int updateBoard(Board board) {
+    public int updateBoard(BoardVO board) {
         int result = 0;
         SqlSession session = getSqlsession();
         try {
+            // board 테이블 수정
             result = boardDao.updateBoard(session, board);
+
+            // attachment테이블 등록
+            List<Attachment> attachments = board.getAttachments();
+            if(!attachments.isEmpty()) {
+                for (Attachment attach : attachments) {
+                    attach.setBoardId(board.getId());
+                    result = boardDao.insertAttachment(session, attach);
+                }
+            }
+
             session.commit();
         } catch (Exception e) {
             session.rollback();

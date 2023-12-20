@@ -34,7 +34,7 @@ public class BoardDao {
         return session.insert("board.insertBoard", board);
     }
 
-    public int updateBoard(SqlSession session, Board board) {
+    public int updateBoard(SqlSession session, BoardVO board) {
         return session.update("board.updateBoard", board);
     }
 
@@ -44,5 +44,9 @@ public class BoardDao {
 
     public int insertAttachment(SqlSession session, Attachment attach) {
         return session.insert("board.insertAttachment", attach);
+    }
+
+    public int updateBoardReadCount(SqlSession session, long id) {
+        return session.update("board.updateBoardReadCount", id);
     }
 }

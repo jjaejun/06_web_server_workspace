@@ -2,6 +2,7 @@ package com.sh.mvc.board.model.vo;
 
 import com.sh.mvc.board.model.entity.Attachment;
 import com.sh.mvc.board.model.entity.Board;
+import com.sh.mvc.member.model.entity.Member;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
  * - entity클래스를 확장한 객체
  */
 public class BoardVO extends Board {
+    private Member member;
     private int attachCount; // 첨부파일 개수
     private List<Attachment> attachments = new ArrayList<>();
 
@@ -36,10 +38,20 @@ public class BoardVO extends Board {
     public void addAttachment(Attachment attachment) {
         this.attachments.add(attachment);
     }
+
+    public Member getMember() {
+        return member;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
+
     @Override
     public String toString() {
         return "BoardVO{" +
-                "attachCount=" + attachCount +
+                "member=" + member +
+                ", attachCount=" + attachCount +
                 ", attachments=" + attachments +
                 "} " + super.toString();
     }

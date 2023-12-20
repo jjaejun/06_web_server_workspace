@@ -343,7 +343,24 @@ select
     , a.original_filename
     , a.reg_date attach_reg_date
 from
-    board b left join attachment a
-        on b.id = a.board_id
+    board b 
+        left join attachment a
+            on b.id = a.board_id
+where
+    b.id = 50;
+    
+select
+    b.*
+    , m.name member_name
+    , a.id attach_id
+    , a.board_id board_id
+    , a.original_filename
+    , a.reg_date attach_reg_date
+from
+    board b 
+        left join attachment a
+            on b.id = a.board_id
+        left join member m
+                    on b.member_id = m.id
 where
     b.id = 50;

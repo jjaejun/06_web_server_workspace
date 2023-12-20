@@ -115,7 +115,7 @@ public class BoardDaoTest {
     @MethodSource("boardIdProvider") // boardIdProvider메소드가 반환하는 stream객체의 요소별로 테스트실행
     void test4(long id) {
         // given
-        Board board = boardDao.findById(session, id);
+        BoardVO board = boardDao.findById(session, id);
         assertThat(board).isNotNull();
         // when
         String newTitle = "새 제목";
