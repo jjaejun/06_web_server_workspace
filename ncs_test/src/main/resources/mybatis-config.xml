@@ -12,6 +12,7 @@
 
     <typeAliases>
         <package name="edu.kh.test"/>
+        <package name="edu.kh.test2"/>
         <package name="org.kh.member"/>
     </typeAliases>
 
@@ -30,7 +31,7 @@
     </environments>
 
     <mappers>
-        <mapper resource="mapper/userDTO/userDTO-mapper.xml"/>
+        <mapper resource="mapper/user/user-mapper.xml"/>
         <mapper resource="mapper/member/member-mapper.xml"/>
     </mappers>
 </configuration>

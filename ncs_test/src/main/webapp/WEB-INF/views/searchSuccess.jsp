@@ -37,10 +37,10 @@
             <td>회원나이</td>
         </tr>
         <tr>
-            <td>${userDTO.userNo}</td>
-            <td>${userDTO.userId}</td>
-            <td>${userDTO.userName}</td>
-            <td>${userDTO.userAge}</td>
+            <td>${user.userNo}</td>
+            <td>${user.userId}</td>
+            <td>${user.userName}</td>
+            <td>${user.userAge}</td>
         </tr>
     </table>
 
