@@ -4,7 +4,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static com.sh.mvc.common.SqlSessionTemplate.getSqlsession;
+import static com.sh.mvc.common.SqlSessionTemplate.getSqlSession;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class SqlSessionTemplateTest {
@@ -14,7 +14,7 @@ public class SqlSessionTemplateTest {
     public void test() {
         // getSqlsession()을 적고 Ctrl(유지)+(Space*2) 이후 Ctrl+1로 static import
         // 이후 Ctrl+Alt+V로 SqlSession sqlSession 변수 선언
-        SqlSession sqlSession = getSqlsession();
+        SqlSession sqlSession = getSqlSession();
         assertThat(sqlSession).isNotNull();
     }
 }

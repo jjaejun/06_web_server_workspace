@@ -2,26 +2,27 @@ package com.sh.mvc.board.model.service;
 
 import com.sh.mvc.board.model.dao.BoardDao;
 import com.sh.mvc.board.model.entity.Attachment;
+import com.sh.mvc.board.model.entity.BoardComment;
 import com.sh.mvc.board.model.vo.BoardVO;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
 import java.util.Map;
 
-import static com.sh.mvc.common.SqlSessionTemplate.getSqlsession;
+import static com.sh.mvc.common.SqlSessionTemplate.getSqlSession;
 
 public class BoardService {
     private BoardDao boardDao = new BoardDao();
 
     public List<BoardVO> findAll() {
-        SqlSession session = getSqlsession();
+        SqlSession session = getSqlSession();
         List<BoardVO> board = boardDao.findAll(session);
         session.close();
         return board;
     }
 
     public int getTotalCount() {
-        SqlSession session = getSqlsession();
+        SqlSession session = getSqlSession();
         int result = boardDao.getTotalCount(session);
         session.close();
         return result;
@@ -34,7 +35,7 @@ public class BoardService {
         return findById(id, true);
     }
     public BoardVO findById(long id, boolean hasRead) {
-        SqlSession session = getSqlsession();
+        SqlSession session = getSqlSession();
         BoardVO board = null;
         int result = 0;
         // 조회수 증가처리 (1회 방문시 증가)
@@ -45,7 +46,9 @@ public class BoardService {
 
             // 조회
             board = boardDao.findById(session, id); // select * from board where id = ?
-
+            List<BoardComment> comments = boardDao.findCommentByBoardId(session, id);
+            System.out.println(comments);
+            board.setComments(comments);
             session.commit();
         } catch (Exception e) {
             session.rollback();
@@ -63,7 +66,7 @@ public class BoardService {
     }
 
     public List<BoardVO> findAll(Map<String, Object> param) {
-        SqlSession session = getSqlsession();
+        SqlSession session = getSqlSession();
         List<BoardVO> boards = boardDao.findAll(session, param);
         session.close();
         return boards;
@@ -71,7 +74,7 @@ public class BoardService {
 
     public int insertBoard(BoardVO board) {
         int result = 0;
-        SqlSession session = getSqlsession();
+        SqlSession session = getSqlSession();
         try {
             // board 테이블에 등록
             result = boardDao.insertBoard(session, board);
@@ -98,16 +101,24 @@ public class BoardService {
 
     public int updateBoard(BoardVO board) {
         int result = 0;
-        SqlSession session = getSqlsession();
+        SqlSession session = getSqlSession();
         try {
             // board 테이블 수정
             result = boardDao.updateBoard(session, board);
+
+            // attachment테이블 삭제
+            List<Long> delFiles = board.getDelFiles();
+            if(!delFiles.isEmpty()) {
+                for (Long id : delFiles) {
+                    result = boardDao.deleteAttachment(session, id);
+                }
+            }
 
             // attachment테이블 등록
             List<Attachment> attachments = board.getAttachments();
             if(!attachments.isEmpty()) {
                 for (Attachment attach : attachments) {
-                    attach.setBoardId(board.getId());
+                    attach.setBoardId(board.getId()); // fk 등록
                     result = boardDao.insertAttachment(session, attach);
                 }
             }
@@ -124,9 +135,24 @@ public class BoardService {
 
     public int deleteBoard(long id) {
         int result = 0;
-        SqlSession session = getSqlsession();
+        SqlSession session = getSqlSession();
         try {
             result = boardDao.deleteBoard(session, id);
+            session.commit();
+        } catch (Exception e) {
+            session.rollback();
+            throw e;
+        } finally {
+            session.close();
+        }
+        return result;
+    }
+
+    public int insertBoardComment(BoardComment comment) {
+        int result = 0;
+        SqlSession session = getSqlSession();
+        try {
+            result = boardDao.insertBoardComment(session, comment);
             session.commit();
         } catch (Exception e) {
             session.rollback();

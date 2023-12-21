@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import static com.sh.mvc.common.SqlSessionTemplate.getSqlsession;
+import static com.sh.mvc.common.SqlSessionTemplate.getSqlSession;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class BoardDaoTest {
@@ -28,7 +28,7 @@ public class BoardDaoTest {
     @BeforeEach
     void setUp() {
         this.boardDao = new BoardDao();
-        this.session = getSqlsession();
+        this.session = getSqlSession();
     }
 
     @AfterEach
@@ -168,7 +168,7 @@ public class BoardDaoTest {
 
     public static Stream<Integer> pageNoProvider() {
         BoardDao boardDao = new BoardDao();
-        SqlSession session = getSqlsession();
+        SqlSession session = getSqlSession();
         int totalCount = boardDao.getTotalCount(session);
         int totalPage = (int) Math.ceil((double) totalCount / limit);
         return IntStream.range(1, totalPage).boxed(); // 1 부터 total페이지까지를 요소로 하는 Stream생성
@@ -185,7 +185,7 @@ public class BoardDaoTest {
      */
     public static Stream<Arguments> boardIdProvider() {
         BoardDao boardDao = new BoardDao(); // non-static fixture를 사용할 수 없다.
-        List<BoardVO> boards = boardDao.findAll(getSqlsession());
+        List<BoardVO> boards = boardDao.findAll(getSqlSession());
         return Stream.of(
                 Arguments.arguments(boards.get(0).getId()),
                 Arguments.arguments(boards.get(1).getId())

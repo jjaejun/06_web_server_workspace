@@ -7,35 +7,35 @@ import org.apache.ibatis.session.SqlSession;
 import java.util.List;
 import java.util.Map;
 
-import static com.sh.mvc.common.SqlSessionTemplate.getSqlsession;
+import static com.sh.mvc.common.SqlSessionTemplate.getSqlSession;
 
 
 public class MemberService {
     private MemberDao memberDao = new MemberDao();
 
     public Member findById(String id) {
-        SqlSession session = getSqlsession();
+        SqlSession session = getSqlSession();
         Member member = memberDao.findById(session, id);
         session.close();
         return member;
     }
 
     public List<Member> findAll() {
-        SqlSession session = getSqlsession();
+        SqlSession session = getSqlSession();
         List<Member> members = memberDao.findAll(session);
         session.close();
         return members;
     }
 
     public List<Member> findByName(String name) {
-        SqlSession session = getSqlsession();
+        SqlSession session = getSqlSession();
         List<Member> members = memberDao.findByName(session, name);
         session.close();
         return members;
     }
 
     public List<Member> findByGender(String gender) {
-        SqlSession session = getSqlsession();
+        SqlSession session = getSqlSession();
         List<Member> members = memberDao.findByGender(session, gender);
         session.close();
         return members;
@@ -43,7 +43,7 @@ public class MemberService {
 
     public int insertMember(Member member) {
         int result = 0;
-        SqlSession session = getSqlsession();
+        SqlSession session = getSqlSession();
         try {
             result = memberDao.insertMember(session, member);
             session.commit();
@@ -58,7 +58,7 @@ public class MemberService {
 
     public int updateMember(Member member) {
         int result = 0;
-        SqlSession session = getSqlsession();
+        SqlSession session = getSqlSession();
         try {
             result = memberDao.updateMember(session, member);
             session.commit();
@@ -72,7 +72,7 @@ public class MemberService {
 
     public int updatePassword(Member member) {
         int result = 0;
-        SqlSession session = getSqlsession();
+        SqlSession session = getSqlSession();
         try {
             result = memberDao.updatePassword(session, member);
             session.commit();
@@ -86,7 +86,7 @@ public class MemberService {
 
     public int updateRole(Member member) {
         int result = 0;
-        SqlSession session = getSqlsession();
+        SqlSession session = getSqlSession();
         try {
             result = memberDao.updateRole(session, member);
             session.commit();
@@ -100,7 +100,7 @@ public class MemberService {
 
     public int deleteMember(String id) {
         int result = 0;
-        SqlSession session = getSqlsession();
+        SqlSession session = getSqlSession();
         try {
             result = memberDao.deleteMember(session, id);
             session.commit();
@@ -113,28 +113,28 @@ public class MemberService {
     }
 
     public List<Member> searchMember(Map<String, Object> param) {
-        SqlSession session = getSqlsession();
+        SqlSession session = getSqlSession();
         List<Member> members = memberDao.searchMember(session, param);
         session.close();
         return members;
     }
 
     public List<Member> findAll(Map<String, Object> param) {
-        SqlSession session = getSqlsession();
+        SqlSession session = getSqlSession();
         List<Member> members = memberDao.findAll(session, param);
         session.close();
         return members;
     }
 
     public int getTotalCount() {
-        SqlSession session = getSqlsession();
+        SqlSession session = getSqlSession();
         int totalCount = memberDao.getTotalCount(session);
         session.close();
         return totalCount;
     }
 
     public int getTotalCount(Map<String, Object> param) {
-        SqlSession session = getSqlsession();
+        SqlSession session = getSqlSession();
         int totalCount = memberDao.getTotalCount(session, param);
         session.close();
         return totalCount;

@@ -49,6 +49,9 @@ public class BoardDetailServlet extends HttpServlet {
         req.setAttribute("board", board);
 
         // 응답 쿠키 생성
+        // 만료시간 쿠키종류
+        // - session cookie -1 지정한 경우, session이 만료되면 쿠키 자동 삭제
+        // - persistant cookie n초 지정한 경우
         if(!hasRead) {
             boardCookieValues.add(String.valueOf(id)); // 현재 게시글 id를 추가
             String value = String.join("/", boardCookieValues);

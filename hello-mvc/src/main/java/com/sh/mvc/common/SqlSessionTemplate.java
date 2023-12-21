@@ -26,7 +26,7 @@ public class SqlSessionTemplate {
             e.printStackTrace();
         }
     }
-    public static SqlSession getSqlsession() {
+    public static SqlSession getSqlSession() {
         return factory.openSession(false); // auto-commit
     }
 }

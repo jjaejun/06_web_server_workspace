@@ -47,10 +47,10 @@ public class BoardUpdateServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // DiskFileItemFactory - ServletFileUpload
-        File repository = new File("C:\\Users\\user1\\Dropbox\\KH352_Workspaces\\06_web_server_workspace\\hello-mvc\\src\\main\\webapp\\WEB-INF\\views\\board");
+        File repository = new File("C:\\Users\\user1\\Dropbox\\KH352_Workspaces\\06_web_server_workspace\\hello-mvc\\src\\main\\webapp\\upload\\board");
         DiskFileItemFactory factory = new DiskFileItemFactory();
         factory.setRepository(repository);
-        factory.setSizeThreshold(10 * 1024 * 1024);
+        factory.setSizeThreshold(10 * 1024 * 1024); // 10mb
         ServletFileUpload servletFileUpload = new ServletFileUpload(factory);
         BoardVO board = new BoardVO();
         try {
@@ -82,6 +82,7 @@ public class BoardUpdateServlet extends HttpServlet {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        System.out.println(board);
 
         // 2. 업무로직
         int result = boardService.updateBoard(board);
