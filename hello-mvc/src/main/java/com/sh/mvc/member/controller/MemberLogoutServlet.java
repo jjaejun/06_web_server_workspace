@@ -26,8 +26,9 @@ public class MemberLogoutServlet extends HttpServlet {
         // - true(기본값) 세션이 존재하지 않으면 생성, 존재하는 세션을 반환
         // - false 세션이 있으면 세션반환, 없으면 null 반환
         HttpSession session = req.getSession(false); // 새로 생성여부
-        if (session != null) 
-            session.invalidate();
+        if (session != null)
+//            session.invalidate();
+            session.setAttribute("loginMember", null);
         // 인덱스페이지로 이동 (url변경)
         String location = req.getContextPath() + "/";
         String next = (String) req.getSession().getAttribute("next");

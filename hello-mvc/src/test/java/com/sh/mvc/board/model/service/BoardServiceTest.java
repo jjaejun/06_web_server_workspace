@@ -76,7 +76,7 @@ public class BoardServiceTest {
         // when
         BoardVO board = boardService.findById(id);
         // then
-        assertThat(board) .isNull();
+        assertThat(board).isNull();
     }
 
     // 게시글 등록

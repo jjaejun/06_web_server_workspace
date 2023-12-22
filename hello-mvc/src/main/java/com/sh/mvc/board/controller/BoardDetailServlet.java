@@ -1,5 +1,6 @@
 package com.sh.mvc.board.controller;
 
+import com.sh.mvc.board.model.BoardException;
 import com.sh.mvc.board.model.service.BoardService;
 import com.sh.mvc.board.model.vo.BoardVO;
 import com.sh.mvc.common.HelloMvcUtils;
@@ -27,42 +28,47 @@ public class BoardDetailServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // 1. 사용자 입력값 처리
-        long id = Long.parseLong(req.getParameter("id"));
-        System.out.println(id);
+        try {
+            // 1. 사용자 입력값 처리
+            long id = Long.parseLong(req.getParameter("id"));
+            System.out.println(id);
 
-        // 2. 업무로직
-        // 조회수 관련처리
-        Cookie[] cookies = req.getCookies();
-        List<String> boardCookieValues = getBoardCookieValues(cookies);
-        boolean hasRead = boardCookieValues.contains(String.valueOf(id)); // 현재 게시글 읽음 여부
-        System.out.println(hasRead); // true라면 이미 읽은 상태, false라면 처음 읽은 상태이다.
+            // 2. 업무로직
+            // 조회수 관련처리
+            Cookie[] cookies = req.getCookies();
+            List<String> boardCookieValues = getBoardCookieValues(cookies);
+            boolean hasRead = boardCookieValues.contains(String.valueOf(id)); // 현재 게시글 읽음 여부
+            System.out.println(hasRead); // true라면 이미 읽은 상태, false라면 처음 읽은 상태이다.
 
-        // 조회
-        BoardVO board = boardService.findById(id, hasRead);
-        System.out.println(board);
+            // 조회
+            BoardVO board = boardService.findById(id, hasRead);
+            System.out.println(board);
 
-        // xss 공격대비 escaoeHTML처리
-        String safeHTML = HelloMvcUtils.escapeHTML(board.getContent());
-        // 개행문자 (\n) -> <br>
-        board.setContent(HelloMvcUtils.convertLineFeedToBr(safeHTML));
-        req.setAttribute("board", board);
+            // xss 공격대비 escaoeHTML처리
+            String safeHTML = HelloMvcUtils.escapeHTML(board.getContent());
+            // 개행문자 (\n) -> <br>
+            board.setContent(HelloMvcUtils.convertLineFeedToBr(safeHTML));
+            req.setAttribute("board", board);
 
-        // 응답 쿠키 생성
-        // 만료시간 쿠키종류
-        // - session cookie -1 지정한 경우, session이 만료되면 쿠키 자동 삭제
-        // - persistant cookie n초 지정한 경우
-        if(!hasRead) {
-            boardCookieValues.add(String.valueOf(id)); // 현재 게시글 id를 추가
-            String value = String.join("/", boardCookieValues);
-            Cookie cookie = new Cookie("board", value);
-            cookie.setMaxAge(365 * 24 * 60 * 60); // 1년 유지 쿠기, 음수인 경우 session종료시 삭제, 0인 경우 즉시 삭제
-            cookie.setPath(req.getContextPath() + "/board/boardDetail"); // 지정한 경로일때만 클라이언트에서 서버로 쿠키 전송
-            resp.addCookie(cookie);
+            // 응답 쿠키 생성
+            // 만료시간 쿠키종류
+            // - session cookie -1 지정한 경우, session이 만료되면 쿠키 자동 삭제
+            // - persistant cookie n초 지정한 경우
+            if(!hasRead) {
+                boardCookieValues.add(String.valueOf(id)); // 현재 게시글 id를 추가
+                String value = String.join("/", boardCookieValues);
+                Cookie cookie = new Cookie("board", value);
+                cookie.setMaxAge(365 * 24 * 60 * 60); // 1년 유지 쿠기, 음수인 경우 session종료시 삭제, 0인 경우 즉시 삭제
+                cookie.setPath(req.getContextPath() + "/board/boardDetail"); // 지정한 경로일때만 클라이언트에서 서버로 쿠키 전송
+                resp.addCookie(cookie);
+            }
+
+            // 3. forward
+            req.getRequestDispatcher("/WEB-INF/views/board/boardDetail.jsp").forward(req, resp);
+        } catch (Exception e) {
+            // 예외 전환해서 던지기 : 사용자친화적 메세지, 원인예외 wrapping
+            throw new BoardException("게시글 상세보기 오류", e);
         }
-
-        // 3. forward
-        req.getRequestDispatcher("/WEB-INF/views/board/boardDetail.jsp").forward(req, resp);
     }
 
     private List<String> getBoardCookieValues(Cookie[] cookies) {
