@@ -42,10 +42,14 @@
                     수정
                 </button>
                 <button type="button"
+                        onclick="confirm('정말 삭제하시겠습니까? 😯') && document.boardDeleteFrm.submit()"
                         class="px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-red-700 rounded-lg focus:ring-4 focus:ring-primary-200">
                     삭제
                 </button>
             </div>
+            <form action="${pageContext.request.contextPath}/board/boardDelete" method="post" name="boardDeleteFrm">
+                <input type="hidden" name="id" value="${board.id}">
+            </form>
         </c:if>
     </div>
     <!-- 댓글 폼 -->
@@ -93,8 +97,12 @@
                         <td class="px-6 py-4">
                             <c:if test="${comment.memberId eq loginMember.id || loginMember.role eq Role.A}">
                                 <div class="flex">
-                                    <a href="#" class="font-medium text-red-600 hover:underline ms-3">Remove</a>
+                                    <a href="javascript:confirm('정말 삭제하시겠습니까? 😲') && document.boardCommentDeleteFrm${comment.id}.submit();" class="font-medium text-red-600 hover:underline ms-3">Remove</a>
                                 </div>
+                                <form name="boardCommentDeleteFrm${comment.id}" action="${pageContext.request.contextPath}/board/boardCommentDelete" method="post">
+                                    <input type="hidden" name="id" value="${comment.id}">
+                                    <input type="hidden" name="boardId" value="${board.id}">
+                                </form>
                             </c:if>
                         </td>
                         <td class="px-4 py-4">
@@ -126,8 +134,12 @@
                         <td class="px-6 py-4">
                             <c:if test="${board.memberId eq loginMember.id || loginMember.role eq Role.A}">
                                 <div class="flex">
-                                    <a href="#" class="font-medium text-red-600 hover:underline ms-3">Remove</a>
+                                    <a href="javascript:confirm('정말 삭제하시겠습니까? 😲') && document.boardCommentDeleteFrm${comment.id}.submit();" class="font-medium text-red-600 hover:underline ms-3">Remove</a>
                                 </div>
+                                <form name="boardCommentDeleteFrm${comment.id}" action="${pageContext.request.contextPath}/board/boardCommentDelete" method="post">
+                                    <input type="hidden" name="id" value="${comment.id}">
+                                    <input type="hidden" name="boardId" value="${board.id}">
+                                </form>
                             </c:if>
                         </td>
                         <td class="px-6 py-4"></td>
@@ -138,5 +150,10 @@
         </table>
     </div>
 </div>
+<script>
+    <%--const contextPath = '${pageContext.request.contextPath}';--%>
+    <%--const boardId = '${board.id}';--%>
+    <%--const loginMemberId = '${loginMember.id}';--%>
+</script>
 <script src="${pageContext.request.contextPath}/js/board/boardDetail.js"></script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

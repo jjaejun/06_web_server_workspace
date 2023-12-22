@@ -34,6 +34,7 @@ public class BoardService {
     public BoardVO findById(long id) {
         return findById(id, true);
     }
+
     public BoardVO findById(long id, boolean hasRead) {
         SqlSession session = getSqlSession();
         BoardVO board = null;
@@ -88,7 +89,6 @@ public class BoardService {
                     result = boardDao.insertAttachment(session, attach);
                 }
             }
-
             session.commit();
         } catch (Exception e) {
             session.rollback();
@@ -153,6 +153,21 @@ public class BoardService {
         SqlSession session = getSqlSession();
         try {
             result = boardDao.insertBoardComment(session, comment);
+            session.commit();
+        } catch (Exception e) {
+            session.rollback();
+            throw e;
+        } finally {
+            session.close();
+        }
+        return result;
+    }
+
+    public int deleteBoardComment(long id) {
+        int result = 0;
+        SqlSession session = getSqlSession();
+        try {
+            result = boardDao.deleteBoardComment(session, id);
             session.commit();
         } catch (Exception e) {
             session.rollback();

@@ -19,6 +19,7 @@ public class BoardVO extends Board {
     private List<Attachment> attachments = new ArrayList<>();
     private List<Long> delFiles = new ArrayList<>();
     private List<BoardComment> comments;
+    private int commentCount;
 
     public BoardVO() {}
 
@@ -66,6 +67,14 @@ public class BoardVO extends Board {
         this.comments = comments;
     }
 
+    public int getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(int commentCount) {
+        this.commentCount = commentCount;
+    }
+
     @Override
     public String toString() {
         return "BoardVO{" +
@@ -74,6 +83,7 @@ public class BoardVO extends Board {
                 ", attachments=" + attachments +
                 ", delFiles=" + delFiles +
                 ", comments=" + comments +
+                ", commentCount=" + commentCount +
                 "} " + super.toString();
     }
 
