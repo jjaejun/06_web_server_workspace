@@ -437,3 +437,8 @@ connect by
     parent_comment_id = prior id;
     
 commit;
+
+create table tb_test (
+    id varchar2(2000), -- pk
+);
+create sequence seq_tb_test_id;

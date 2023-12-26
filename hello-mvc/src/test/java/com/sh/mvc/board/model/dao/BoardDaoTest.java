@@ -84,7 +84,7 @@ public class BoardDaoTest {
         // when
         Board board = boardDao.findById(session, id);
         // then
-        assertThat(board) .isNull();
+        assertThat(board).isNull();
     }
     @DisplayName("게시글 등록")
     @Test
