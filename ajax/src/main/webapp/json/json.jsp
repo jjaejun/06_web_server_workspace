@@ -116,6 +116,7 @@
     </form>
 
     <form name="celebUpdateFrm">
+        <input type="hidden" name="id">
         <fieldset>
             <legend>Celeb 수정폼</legend>
             <table>
@@ -166,10 +167,10 @@
         </fieldset>
     </form>
 
-    <script>
-      const contextPath = '${pageContext.request.contextPath}';
-    </script>
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script>
+    const contextPath = '${pageContext.request.contextPath}';
+    </script>
     <script src="${pageContext.request.contextPath}/js/json.js"></script>
 </body>
 </html>

@@ -39,4 +39,34 @@ public class CelebService {
         }
         return result;
     }
+
+    public int updateCeleb(Celeb celeb) {
+        int result = 0;
+        SqlSession session = getSqlSession();
+        try {
+            result = celebDao.updateCeleb(session, celeb);
+            session.commit();
+        } catch (Exception e) {
+            session.rollback();
+            throw e;
+        } finally {
+            session.close();
+        }
+        return result;
+    }
+
+    public int deleteCeleb(Long id) {
+        int result = 0;
+        SqlSession session = getSqlSession();
+        try {
+            result = celebDao.deleteCeleb(session, id);
+            session.commit();
+        } catch (Exception e) {
+            session.rollback();
+            throw e;
+        } finally {
+            session.close();
+        }
+        return result;
+    }
 }
