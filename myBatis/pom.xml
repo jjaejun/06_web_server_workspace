@@ -23,6 +23,22 @@
       <artifactId>ojdbc8</artifactId>
       <version>23.2.0.0</version>
     </dependency>
+    <!-- Oracle Cloud Database ATP 추가의존 -->
+    <dependency>
+      <groupId>com.oracle.database.security</groupId>
+      <artifactId>oraclepki</artifactId>
+      <version>19.21.0.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.oracle.database.security</groupId>
+      <artifactId>osdt_cert</artifactId>
+      <version>19.21.0.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.oracle.database.security</groupId>
+      <artifactId>osdt_core</artifactId>
+      <version>19.21.0.0</version>
+    </dependency>
 
     <!-- https://mvnrepository.com/artifact/org.mybatis/mybatis -->
     <dependency>
