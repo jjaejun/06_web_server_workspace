@@ -521,3 +521,22 @@ where
         checked = 0
 order by
     id desc;
+    
+-- ncsTest
+CREATE TABLE TB_MEMBER(
+
+MEMBER_ID VARCHAR2(30) PRIMARY KEY,
+
+MEMBER_PWD VARCHAR2(100) NOT NULL,
+
+MEMBER_NM VARCHAR2(15) NOT NULL,
+
+MEMBER_ENROLL_DT DATE DEFAULT SYSDATE
+
+);
+
+INSERT INTO TB_MEMBER VALUES('user01', 'pass01', '홍길동', DEFAULT);
+
+commit;
+
+select * from tb_member;
